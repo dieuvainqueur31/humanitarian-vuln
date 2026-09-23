@@ -9,7 +9,6 @@ import {
   UserPlus,
   Send,
   Activity,
-  Globe,
   Users,
   Eye,
   ArrowRight,

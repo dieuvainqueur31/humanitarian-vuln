@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { DashboardLayout } from '../../components/layout/DashboardLayout';
 import { apiFetch } from '../../services/api';
-import { Radio, MapPin, AlertCircle, CheckCircle2, ShieldAlert } from 'lucide-react';
+import { Radio, MapPin  } from 'lucide-react';
 
 interface Mission {
   id: string;

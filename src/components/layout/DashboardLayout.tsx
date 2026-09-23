@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { 
-  Shield, LogOut, Radio, BarChart3, Building2, 
-  Map, ClipboardList, Layers, Bell 
+import {
+  Shield, LogOut, Radio, BarChart3, Building2,
+  Map, ClipboardList, Layers
 } from 'lucide-react';
 import type { UserRole } from '../../context/AuthContextObject';
 import { useAuth } from '../../context/useAuth';
@@ -29,7 +29,7 @@ export const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ child
       case 'ADMIN':
         return [
           { label: 'Activities', path: '/admin/dashboard', icon: <Radio className="w-4 h-4" /> },
-          
+
         ];
       case 'FIELD_AGENT':
         return [
@@ -64,7 +64,7 @@ export const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ child
       {/* Top Navigation Bar */}
       <header className="bg-slate-900/90 border-b border-slate-800 sticky top-0 z-50 backdrop-blur-md px-6 py-3">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          
+
           <div className="flex items-center gap-6">
             <Link to="/" className="flex items-center gap-2 text-sky-400 font-bold text-base tracking-wider">
               <Shield className="w-5 h-5" />
@@ -79,8 +79,8 @@ export const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ child
                     key={item.path}
                     to={item.path}
                     className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
-                      isActive 
-                        ? 'bg-sky-500/10 text-sky-400 border border-sky-500/20' 
+                      isActive
+                        ? 'bg-sky-500/10 text-sky-400 border border-sky-500/20'
                         : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
                     }`}
                   >

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { DashboardLayout } from '../../components/layout/DashboardLayout';
 import { apiFetch, apiDownload } from '../../services/api';
@@ -83,47 +83,6 @@ export const VerifierDetailPage: React.FC = () => {
       confirmButtonColor: '#0284c7',
     });
 
-  const loadInitialData = useCallback(async () => {
-    if (!uuid) return;
-    try {
-      setLoading(true);
-      setError(null);
-
-      const [reportData, usersData, missionsResponse] = await Promise.all([
-        apiFetch<Report>(`/reports/${uuid}`),
-        apiFetch<User[]>('/users'),
-        apiFetch<PageableResponse<Mission>>('/missions').catch(() => ({ content: [] })),
-      ]);
-
-      setReport(reportData);
-      setUpdatedPriority(reportData.priority);
-      setMissionTitle(`Field Verification Mission for ${reportData.title}`);
-
-      // Filter Field Agents
-      const fieldAgents = usersData.filter((user) =>
-        user.roles.some((r) => r.includes('FIELD_AGENT'))
-      );
-      setAgents(fieldAgents);
-
-      // Default Lead and Team Selection
-      if (fieldAgents.length > 0) {
-        setSelectedLeadAgentId(fieldAgents[0].id);
-        setSelectedTeamMemberIds([fieldAgents[0].id]);
-      }
-
-      if (missionsResponse && missionsResponse.content) {
-        setMissions(missionsResponse.content.filter((m) => m.reportUuid === uuid));
-      }
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch details.');
-    } finally {
-      setLoading(false);
-    }
-  }, [uuid]);
-
-  // useEffect(() => {
-  //   loadInitialData();
-  // }, [loadInitialData]);
 
   useEffect(() => {
     if (!uuid) return;
@@ -539,7 +498,7 @@ export const VerifierDetailPage: React.FC = () => {
                         Team ({mission.teamMemberNames.length}): <strong className="text-slate-200">{mission.teamMemberNames.join(', ')}</strong>
                       </span>
                       <span className="flex items-center gap-1">
-                        <Calendar className="w-3.5 h-3.5" /> Started: {new Date(mission.startedAt).toLocaleDateString()}
+                        <Calendar className="w-3.5 h-3.5" /> Started: {mission.startedAt ?new Date(mission.startedAt).toLocaleDateString():'N/A'}
                       </span>
                     </div>
 
@@ -593,7 +552,8 @@ export const VerifierDetailPage: React.FC = () => {
                 <label className="block text-slate-400 mb-1">Verification Method</label>
                 <select
                   value={verificationMethod}
-                  onChange={(e) => setVerificationMethod(e.target.value as any)}
+                 // onChange={(e) => setVerificationMethod(e.target.value as any)}
+                 onChange={(e) => setVerificationMethod(e.target.value as 'PHONE_CONFIRMATION' | 'FIELD_VISIT' | 'COMMUNITY_SOURCE' | 'SATELLITE_IMAGE')}
                   className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-white"
                 >
                   <option value="PHONE_CONFIRMATION">Phone Confirmation</option>
@@ -607,7 +567,8 @@ export const VerifierDetailPage: React.FC = () => {
                 <label className="block text-slate-400 mb-1">Reclassify Priority</label>
                 <select
                   value={updatedPriority}
-                  onChange={(e) => setUpdatedPriority(e.target.value as any)}
+                  //onChange={(e) => setUpdatedPriority(e.target.value as any)}
+                  onChange={(e) => setUpdatedPriority(e.target.value as 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL')}
                   className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-white"
                 >
                   <option value="LOW">LOW</option>

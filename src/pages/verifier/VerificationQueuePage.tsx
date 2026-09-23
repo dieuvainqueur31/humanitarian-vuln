@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { DashboardLayout } from '../../components/layout/DashboardLayout';
 import { apiFetch } from '../../services/api';
 import type { Report, PageableResponse } from '../../types/verification';
-import { Shield, ArrowRight, AlertTriangle, CheckCircle, Clock, RefreshCw } from 'lucide-react';
+import { Shield, ArrowRight,  Clock, RefreshCw } from 'lucide-react';
 
 export const VerificationQueuePage: React.FC = () => {
   const navigate = useNavigate();

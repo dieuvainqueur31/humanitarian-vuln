@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { apiFetch } from '../../services/api';
 import type { UserProfile } from '../../types/admin';
-import { Search, UserCheck, X, Loader2, Mail, Shield } from 'lucide-react';
+import { Search, X, Loader2, Mail, Shield } from 'lucide-react';
 
 interface UserSelectSearchProps {
   onSelectUser: (user: UserProfile | null) => void;
@@ -43,8 +43,10 @@ export const UserSelectSearch: React.FC<UserSelectSearchProps> = ({ onSelectUser
         setIsOpen(true);
       } catch {
         setResults([]);
-      } font-mono
-        setLoading(false);
+      } finally {
+         setLoading(false);
+      }
+
     }, 300);
 
     return () => clearTimeout(timer);

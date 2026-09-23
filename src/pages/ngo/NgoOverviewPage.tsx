@@ -540,7 +540,7 @@ export const NgoOverviewPage: React.FC = () => {
                 members.map((m) => (
                   <div key={m.id} className="py-2.5 first:pt-0 last:pb-0 flex justify-between items-center">
                     <div>
-                      <p className="text-xs font-bold text-slate-200">{m.userName || m.name || m.email}</p>
+                      <p className="text-xs font-bold text-slate-200">{m.name || m.lastName ||m.firstName || m.email}</p>
                       <p className="text-[11px] text-slate-400">{m.position}</p>
                     </div>
                     <span className="text-[10px] bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded font-mono">

@@ -19,7 +19,7 @@ import {
   FileText,
   AlertTriangle,
   Activity,
-  Layers,
+
 } from 'lucide-react';
 
 // Fix Leaflet marker icon rendering issues

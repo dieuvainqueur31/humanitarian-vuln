@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { apiFetch } from '../../services/api';
 import type { AuditLog } from '../../types/admin';
-import { History, Search, RefreshCw, FileText, User, Calendar, Tag } from 'lucide-react';
+import { History, Search, RefreshCw, User, Calendar, Tag } from 'lucide-react';
 import Swal from 'sweetalert2';
 
 export const AuditLogsMgmt: React.FC = () => {

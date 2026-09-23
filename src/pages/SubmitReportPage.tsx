@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
 import { reportService } from '../services/reportService';
@@ -31,8 +31,8 @@ export const SubmitReportPage: React.FC = () => {
   const { isAuthenticated, userEmail } = useAuth();
 
   // Data Sources
-  const [categories, setCategories] = useState<ReportCategory[]>([]);
-  const [locations, setLocations] = useState<LocationItem[]>([]);
+  const [categories] = useState<ReportCategory[]>([]);
+  const [locations] = useState<LocationItem[]>([]);
   const [trackedReports, setTrackedReports] = useState<LocalTrackingRecord[]>([]);
 
   // Form State
@@ -313,7 +313,7 @@ export const SubmitReportPage: React.FC = () => {
                 <label className="block text-sm font-semibold text-slate-700 mb-1">Priority Level *</label>
                 <select
                   value={priority}
-                  onChange={(e) => setPriority(e.target.value as any)}
+                  onChange={(e) => setPriority(e.target.value as  'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL')}
                   className="w-full border border-slate-300 rounded-lg p-2.5 text-sm bg-white focus:ring-2 focus:ring-sky-500 outline-none"
                 >
                   <option value="LOW">LOW</option>

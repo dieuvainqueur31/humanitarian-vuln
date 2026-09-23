@@ -1,4 +1,9 @@
 // src/types/ngo.ts
+import type { CaseResponse, CaseHistory } from './verification';
+
+export type CaseItem = CaseResponse;
+export type { CaseHistory };
+export type Intervention = InterventionResponse;
 
 export type InterventionStatus = 'PLANNED' | 'IN_PROGRESS' | 'COMPLETED' | 'CANCELLED';
 
