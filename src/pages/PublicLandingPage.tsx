@@ -17,14 +17,14 @@ import {
   Sun
 } from 'lucide-react';
 import type { PublicLandingData } from '../types/public';
+import { apiFetch } from '../services/api';
 
 export const PublicLandingPage: React.FC = () => {
   const [data, setData] = useState<PublicLandingData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    fetch('/api/v1/public/landing')
-      .then((res) => res.json())
+    apiFetch<PublicLandingData>('/public/landing')
       .then((apiData) => {
         setData(apiData);
         setLoading(false);

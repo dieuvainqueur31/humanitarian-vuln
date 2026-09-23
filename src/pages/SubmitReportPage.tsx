@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
 import { reportService } from '../services/reportService';
@@ -31,8 +31,8 @@ export const SubmitReportPage: React.FC = () => {
   const { isAuthenticated, userEmail } = useAuth();
 
   // Data Sources
-  const [categories] = useState<ReportCategory[]>([]);
-  const [locations] = useState<LocationItem[]>([]);
+  const [categories, setCategories] = useState<ReportCategory[]>([]);
+  const [locations, setLocations] = useState<LocationItem[]>([]);
   const [trackedReports, setTrackedReports] = useState<LocalTrackingRecord[]>([]);
 
   // Form State
@@ -55,6 +55,30 @@ export const SubmitReportPage: React.FC = () => {
   // Form Submission UI State
   const [submitting, setSubmitting] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
+
+  useEffect(() => {
+    const loadFormData = async () => {
+      try {
+        const [cats, locs] = await Promise.all([
+          reportService.getCategories(),
+          reportService.getLocations(),
+        ]);
+        setCategories(cats);
+        setLocations(locs);
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : 'Failed to load form data.';
+        Swal.fire({
+          icon: 'error',
+          title: 'Failed to Load Data',
+          text: msg,
+          confirmButtonColor: '#e11d48',
+        });
+      }
+    };
+
+    loadFormData();
+    loadAndSyncReports();
+  }, []);
 
   // Toast Helper Configuration
     const Toast = Swal.mixin({
@@ -298,7 +322,7 @@ export const SubmitReportPage: React.FC = () => {
                   required
                   value={categoryId}
                   onChange={(e) => setCategoryId(Number(e.target.value))}
-                  className="w-full border border-slate-300 rounded-lg p-2.5 text-sm bg-white focus:ring-2 focus:ring-sky-500 outline-none"
+                  className="w-full border border-slate-300 rounded-lg p-2.5 text-sm text-slate-900  bg-white focus:ring-2 focus:ring-sky-500 outline-none"
                 >
                   <option value="">Select Category</option>
                   {categories.map((c) => (
@@ -313,13 +337,13 @@ export const SubmitReportPage: React.FC = () => {
                 <label className="block text-sm font-semibold text-slate-700 mb-1">Priority Level *</label>
                 <select
                   value={priority}
-                  onChange={(e) => setPriority(e.target.value as  'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL')}
-                  className="w-full border border-slate-300 rounded-lg p-2.5 text-sm bg-white focus:ring-2 focus:ring-sky-500 outline-none"
+                  onChange={(e) => setPriority(e.target.value as any)}
+                  className="w-full border border-slate-300 rounded-lg p-2.5 text-sm text-black bg-white focus:ring-2 focus:ring-sky-500 outline-none"
                 >
-                  <option value="LOW">LOW</option>
-                  <option value="MEDIUM">MEDIUM</option>
-                  <option value="HIGH">HIGH</option>
-                  <option value="CRITICAL">CRITICAL</option>
+                  <option value="LOW" className="text-slate-900 bg-white">LOW</option>
+                  <option value="MEDIUM" className="text-slate-900 bg-white">MEDIUM</option>
+                  <option value="HIGH" className="text-slate-900 bg-white">HIGH</option>
+                  <option value="CRITICAL" className="text-slate-900 bg-white">CRITICAL</option>
                 </select>
               </div>
             </div>
@@ -333,7 +357,7 @@ export const SubmitReportPage: React.FC = () => {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Brief summary of the incident"
-                className="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-sky-500 outline-none"
+                className="w-full border border-slate-300 rounded-lg p-2.5 text-sm text-black focus:ring-2 focus:ring-sky-500 outline-none"
               />
             </div>
 
@@ -345,7 +369,7 @@ export const SubmitReportPage: React.FC = () => {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Describe what happened, parties involved, and current status..."
-                className="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-sky-500 outline-none"
+                className="w-full border border-slate-300 rounded-lg p-2.5 text-sm text-black focus:ring-2 focus:ring-sky-500 outline-none"
               />
             </div>
 
@@ -362,9 +386,9 @@ export const SubmitReportPage: React.FC = () => {
                 onChange={(e) => setLocationId(Number(e.target.value))}
                 className="w-full border border-slate-300 rounded-lg p-2.5 text-sm bg-white focus:ring-2 focus:ring-sky-500 outline-none"
               >
-                <option value="">-- Choose Incident Location --</option>
+                <option value=""className="text-slate-500 bg-black">-- Choose Incident Location --</option>
                 {locations.map((loc) => (
-                  <option key={loc.id} value={loc.id}>
+                  <option key={loc.id} value={loc.id} className="text-slate-900 bg-white">
                     {loc.locationName} - {loc.city}, {loc.territory}, {loc.province} ({loc.country})
                   </option>
                 ))}
@@ -413,7 +437,7 @@ export const SubmitReportPage: React.FC = () => {
                 placeholder="Paste Report UUID..."
                 value={searchUuidInput}
                 onChange={(e) => setSearchUuidInput(e.target.value)}
-                className="flex-1 border border-slate-300 rounded-lg px-3 py-1.5 text-xs focus:ring-2 focus:ring-sky-500 outline-none font-mono"
+                className="flex-1 border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-900 focus:ring-2 focus:ring-sky-500 outline-none font-mono"
               />
               <button
                 type="submit"
