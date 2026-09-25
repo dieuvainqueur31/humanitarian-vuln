@@ -77,7 +77,7 @@ export const AnalyticsReportsPage: React.FC = () => {
     let csvContent = 'data:text/csv;charset=utf-8,';
 
     // Section 1: Core Statistics
-    csvContent += 'PEACE & HUMANITARIAN PLATFORM - EXECUTIVE ANALYTICS EXPORT\n';
+    csvContent += 'VULNERABILITY MANAGEMENT SYSTEM FOR NGO SUPPORT - EXECUTIVE ANALYTICS EXPORT\n';
     csvContent += `Generated At,${new Date().toISOString()}\n\n`;
     csvContent += 'METRIC,VALUE\n';
     csvContent += `Total Reports,${data.stats.totalReports}\n`;
@@ -148,7 +148,7 @@ export const AnalyticsReportsPage: React.FC = () => {
           <table class="header-table">
             <tr>
               <td>
-                <div class="org-title">PEACE & HUMANITARIAN REPORTING PLATFORM</div>
+                <div class="org-title">VULNERABILITY MANAGEMENT SYSTEM FOR NGO SUPPORT</div>
                 <div class="doc-title">OFFICIAL HUMANITARIAN ANALYTICS & SITUATIONAL ASSESSMENT</div>
               </td>
               <td style="text-align: right; font-size: 11px; color: #475569;">
