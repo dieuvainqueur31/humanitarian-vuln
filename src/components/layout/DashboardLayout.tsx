@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
-  Shield, LogOut, Radio, BarChart3, Building2,
-  Map, ClipboardList, Layers
+  Shield, LogOut, Radio, BarChart3, Building2
 } from 'lucide-react';
 import type { UserRole } from '../../context/AuthContextObject';
 import { useAuth } from '../../context/useAuth';
@@ -34,19 +33,17 @@ export const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ child
       case 'FIELD_AGENT':
         return [
           { label: 'Active Missions', path: '/agent/missions', icon: <Radio className="w-4 h-4" /> },
-          { label: 'Submit Field Recon', path: '/agent/recon', icon: <ClipboardList className="w-4 h-4" /> },
-          { label: 'Offline Queue', path: '/agent/offline-sync', icon: <Layers className="w-4 h-4" /> },
+
         ];
       case 'NGO_MANAGER':
         return [
           { label: 'Resource Deployment', path: '/ngo/overview', icon: <Building2 className="w-4 h-4" /> },
-          { label: 'Assigned Zones', path: '/ngo/zones', icon: <Map className="w-4 h-4" /> },
-          { label: 'Aid Logistics', path: '/ngo/logistics', icon: <ClipboardList className="w-4 h-4" /> },
+
         ];
       case 'ANALYST':
         return [
           { label: 'Predictive Analytics', path: '/analytics/reports', icon: <BarChart3 className="w-4 h-4" /> },
-          { label: 'Heatmaps', path: '/analytics/heatmaps', icon: <Map className="w-4 h-4" /> },
+
         ];
       case 'VERIFIER':
         return [
@@ -68,7 +65,7 @@ export const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ child
           <div className="flex items-center gap-6">
             <Link to="/" className="flex items-center gap-2 text-sky-400 font-bold text-base tracking-wider">
               <Shield className="w-5 h-5" />
-              <span>PEACE & HUMANITARIAN</span>
+              <span>Vulnerability & NGO Support</span>
             </Link>
 
             <nav className="hidden md:flex items-center gap-1">
